@@ -4,10 +4,11 @@ Thunder Chen<nkchenz@gmail.com> 2007.9.1
 try:
     import xml.etree.ElementTree as ET
 except:
-    import cElementTree as ET # for 2.4
+    import cElementTree as ET  # for 2.4
 
-from object_dict import object_dict 
+from object_dict import object_dict
 import re
+
 
 class XML2Dict(object):
 
@@ -32,9 +33,9 @@ class XML2Dict(object):
                 old = node_tree[tag]
                 if not isinstance(old, list):
                     node_tree.pop(tag)
-                    node_tree[tag] = [old] # multi times, so change old dict to a list       
-                node_tree[tag].append(tree) # add the new one      
-        
+                    node_tree[tag] = [old] # multi times, so change old dict to a list
+                node_tree[tag].append(tree) # add the new one
+
         if not node_tree:
             node_tree = None
         return  node_tree
@@ -48,19 +49,21 @@ class XML2Dict(object):
         """
         result = re.compile("\{(.*)\}(.*)").search(tag)
         if result:
-            value.namespace, tag = result.groups()    
+            value.namespace, tag = result.groups()
         return (tag, value)
 
-    def parse(self, file):
+    def parse(self, file_to_parse):
         """parse a xml file to a dict"""
-        f = open(file, 'r')
-        return self.fromstring(f.read()) 
+        opened_file = open(file_to_parse, 'r')
+        return self.fromstring(opened_file.read())
+
 
     def fromstring(self, s):
         """parse a string"""
         t = ET.fromstring(s)
         root_tag, root_tree = self._namespace_split(t.tag, self._parse_node(t))
         return object_dict({root_tag: root_tree})
+
 
 class Dict2XML (object):
     def tostring(self, d):
@@ -71,17 +74,17 @@ class Dict2XML (object):
             raise ValueError('Dictionary must have exactly one root element')
         if isinstance(d.itervalues().next(), list):
             raise ValueError('Dictionary must not be a map to list: %r' % d)
-        
+
         x = '<?xml version="1.0" encoding="UTF-8"?>\n'
         return x + self.__tostring_helper(d)
-    
+
     def __tostring_helper(self, d):
         if isinstance(d, int):
             return str(d)
-        
+
         elif isinstance(d, basestring):
             return '<![CDATA[%s]]>' % d
-        
+
         elif isinstance(d, dict):
             x = ''
             for tag,content in d.iteritems():
@@ -96,13 +99,12 @@ class Dict2XML (object):
                 else:
                     x += '<%s>%s</%s>' % (tag,self.__tostring_helper(content),tag)
             return x
-        
+
         else:
             raise ValueError('Cannot convert %r to an XML string' % d)
 
 
-
-if __name__ == '__main__':
+if __name__ =='__main__':
     s = """<?xml version="1.0" encoding="utf-8" ?>
     <result>
         <count n="1">10</count>
@@ -119,7 +121,7 @@ if __name__ == '__main__':
     print r.result.count.n
 
     for data in r.result.data:
-        print data.id, data.name 
+        print data.id, data.name
 
     # Test file parsing
     pprint(xml.parse('a'))

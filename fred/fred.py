@@ -19,17 +19,13 @@ except ImportError:  # pragma: no cover
     from urllib.request import urlopen
 
 from .xml2dict import xml2dict
-from .fred_api_key import API_KEY
 
 
 class Fred(object):
     """An easy-to-use Python wrapper over the St. Louis FRED API."""
 
-    def __init__(self, api_key=''):
-        if not api_key:
-            self.api_key = API_KEY
-        else:
-            self.api_key = api_key
+    def __init__(self, api_key):
+        self.api_key = api_key
         self.base_url = 'http://api.stlouisfed.org/fred'
 
     def api(self, parent, child=None, xml_output=False, **kwargs):

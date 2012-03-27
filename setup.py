@@ -30,7 +30,7 @@ For more information, please refer to <http://unlicense.org/>
 """
 
 try:
-    from setuptools import setup
+    from setuptools import setup, find_packages
 except ImportError:
     from distutils.core import setup
 
@@ -128,16 +128,17 @@ All code released under [the Unlicense](http://unlicense.org/) (a.k.a. Public
 Domain).
 """
 
+
 setup(name="fred",
       version="1.3",
       description="St. Louis Federal Reserve FRED API",
       long_description=long_description,
       keywords="fred, fred api, federal reserve, st. louis fed",
-      author="Zach Williams",
-      author_email="hey@zachwill.com",
+      author="Johnny Saucedo",
+      author_email="johnny@calculatedtrade.com",
       url="https://github.com/zachwill/fred",
       license="Unlicense (a.k.a. Public Domain)",
-      packages=["fred"],
+      packages=find_packages(),
       classifiers=['Development Status :: 5 - Production/Stable',
                    'Intended Audience :: Developers',
                    'Natural Language :: English',
