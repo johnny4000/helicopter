@@ -8,7 +8,7 @@ try:
 except:
     import cElementTree as ET  # for 2.4
 
-from object_dict import object_dict
+from object_dict import ObjectDict
 import re
 
 
@@ -18,7 +18,7 @@ class XML2Dict(object):
         pass
 
     def _parse_node(self, node):
-        node_tree = object_dict()
+        node_tree = ObjectDict()
         # Save attrs and text, hope there will not be a child with same name
         if node.text and node.text.strip():
             node_tree = node.text
@@ -61,7 +61,7 @@ class XML2Dict(object):
         """parse a string"""
         t = ET.fromstring(s)
         root_tag, root_tree = self._namespace_split(t.tag, self._parse_node(t))
-        return object_dict({root_tag: root_tree})
+        return ObjectDict({root_tag: root_tree})
 
 
 class Dict2XML (object):
