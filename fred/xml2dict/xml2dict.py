@@ -1,6 +1,8 @@
 """
 Thunder Chen<nkchenz@gmail.com> 2007.9.1
+@editor: JohnnySaucedo jsaucedo@gmail.com
 """
+# pylint: disable-msg=C0111,C0103
 try:
     import xml.etree.ElementTree as ET
 except:
@@ -27,19 +29,17 @@ class XML2Dict(object):
             #Save childrens
             for child in node.getchildren():
                 tag, tree = self._namespace_split(child.tag, self._parse_node(child))
-                if  tag not in node_tree: # the first time, so store it in dict
+                if  tag not in node_tree:  # the first time, so store it in dict
                     node_tree[tag] = tree
                     continue
                 old = node_tree[tag]
                 if not isinstance(old, list):
                     node_tree.pop(tag)
-                    node_tree[tag] = [old] # multi times, so change old dict to a list
-                node_tree[tag].append(tree) # add the new one
-
+                    node_tree[tag] = [old]  # multi times, so change old dict to a list
+                node_tree[tag].append(tree)  # add the new one
         if not node_tree:
             node_tree = None
         return  node_tree
-
 
     def _namespace_split(self, tag, value):
         """
@@ -56,7 +56,6 @@ class XML2Dict(object):
         """parse a xml file to a dict"""
         opened_file = open(file_to_parse, 'r')
         return self.fromstring(opened_file.read())
-
 
     def fromstring(self, s):
         """parse a string"""

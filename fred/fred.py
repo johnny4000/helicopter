@@ -10,7 +10,7 @@ try:
     from urllib import urlencode
 except ImportError:  # pragma: no cover
     # For Python 3.
-    from urllib.parse import urlencode
+    from urllib.parse import urlencode  # pylint: disable-msg=F0401,E0611
 
 try:
     from urllib2 import urlopen
