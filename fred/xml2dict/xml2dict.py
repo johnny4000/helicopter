@@ -2,7 +2,7 @@
 Thunder Chen<nkchenz@gmail.com> 2007.9.1
 @editor: JohnnySaucedo jsaucedo@gmail.com
 """
-# pylint: disable-msg=C0111,C0103
+# pylint: disable-msg=C0111,C0103,W0404
 try:
     import xml.etree.ElementTree as ET
 except:
@@ -23,8 +23,8 @@ class XML2Dict(object):
         if node.text and node.text.strip():
             node_tree = node.text
         else:
-            for (k,v) in node.attrib.items():
-                k,v = self._namespace_split(k, v)
+            for (k, v) in node.attrib.items():
+                k, v = self._namespace_split(k, v)
                 node_tree[k] = v
             #Save childrens
             for child in node.getchildren():
@@ -86,7 +86,7 @@ class Dict2XML (object):
 
         elif isinstance(d, dict):
             x = ''
-            for tag,content in d.iteritems():
+            for tag, content in d.iteritems():
                 if content is None:
                     x += '<%s />' % tag
                 elif isinstance(content, list):
@@ -94,17 +94,17 @@ class Dict2XML (object):
                         if c is None:
                             x += '<%s />' % tag
                         else:
-                            x += '<%s>%s</%s>' % (tag,self.__tostring_helper(c),tag)
+                            x += '<%s>%s</%s>' % (tag, self.__tostring_helper(c), tag)
                 else:
-                    x += '<%s>%s</%s>' % (tag,self.__tostring_helper(content),tag)
+                    x += '<%s>%s</%s>' % (tag, self.__tostring_helper(content), tag)
             return x
 
         else:
             raise ValueError('Cannot convert %r to an XML string' % d)
 
 
-if __name__ =='__main__':
-    s = """<?xml version="1.0" encoding="utf-8" ?>
+if __name__ == '__main__':
+    test_strings = """<?xml version="1.0" encoding="utf-8" ?>
     <result>
         <count n="1">10</count>
         <data><id>491691</id><name>test</name></data>
@@ -113,7 +113,7 @@ if __name__ =='__main__':
     </result>"""
 
     xml = XML2Dict()
-    r = xml.fromstring(s)
+    r = xml.fromstring(test_strings)
     from pprint import pprint
     pprint(r)
     print r.result.count.value
