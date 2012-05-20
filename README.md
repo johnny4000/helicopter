@@ -11,8 +11,8 @@ Sign up for a FRED API key:
 [http://api.stlouisfed.org/api_key.html](http://api.stlouisfed.org/api_key.html)
 
 
-Usage
------
+Usage:
+------
 
 Without your API key saved in the `fred_api_key.py` file:
 
